@@ -33,3 +33,12 @@ func InitStore() *StorageService {
 
 	return storeService
 }
+
+func SaveUrlMapping(short, original, userId string) {
+
+}
+
+func GetOriginalUrl(short string) string {
+
+	return ""
+}
