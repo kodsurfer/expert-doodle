@@ -37,7 +37,7 @@ func InitStore() *StorageService {
 	return storeService
 }
 
-func SaveUrlMapping(short, original, userId string) {
+func SaveUrlMapping(short, original string) {
 	err := storeService.redisClient.Set(ctx, short, original, cacheDuration).Err()
 	if err != nil {
 		fmt.Printf("Save key url error: %v", err)
@@ -45,6 +45,11 @@ func SaveUrlMapping(short, original, userId string) {
 }
 
 func GetOriginalUrl(short string) string {
+	result, err := storeService.redisClient.Get(ctx, short).Result()
+	if err != nil {
+		fmt.Printf("Save key url error: %v", err)
+		return ""
+	}
 
-	return ""
+	return result
 }
