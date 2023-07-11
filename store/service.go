@@ -2,8 +2,8 @@ package store
 
 import (
 	"context"
-	"github.com/go-redis/redis/v8"
-	"time"
+	"fmt"
+	redis "github.com/go-redis/redis/v8"
 )
 
 type StorageService struct {
@@ -15,4 +15,21 @@ var (
 	ctx          = context.Background()
 )
 
-const cacheDuration = 1 * time.Hour
+func InitStore() *StorageService {
+	redisClient := redis.NewClient(&redis.Options{
+		Addr:     "localhost:6379",
+		Password: "",
+		DB:       0,
+	})
+
+	pong, err := redisClient.Ping(ctx).Result()
+	if err != nil {
+		fmt.Printf("Init redis error: %v", err)
+		return nil
+	}
+
+	fmt.Printf("\n Redis start success: pong msg = [%s]", pong)
+	storeService.redisClient = redisClient
+
+	return storeService
+}
