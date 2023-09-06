@@ -3,8 +3,9 @@ package shortener
 import (
 	"crypto/sha256"
 	"fmt"
-	"github.com/itchyny/base58-go"
 	"os"
+
+	"github.com/itchyny/base58-go"
 )
 
 func getSha256(s string) []byte {
